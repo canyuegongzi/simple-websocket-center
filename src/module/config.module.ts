@@ -12,7 +12,7 @@ import {AuthModule} from '../common/auth/auth.module';
     imports: [
         PassportModule.register({ defaultStrategy: 'jwt' }),
         forwardRef(() => AuthModule),   // 处理模块间的循环依赖
-        TypeOrmModule.forFeature([Role, Authority, User]),
+        TypeOrmModule.forFeature([Role, Authority, User], 'mysqlCon'),
     ],
     controllers: [ConfigController],
     providers: [ConfigService],

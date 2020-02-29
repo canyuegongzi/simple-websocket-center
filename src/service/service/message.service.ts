@@ -1,22 +1,33 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Message } from '../../interface/message.chart.interface';
-import { Type } from '../../interface/type.chart.interface';
-import { Line } from '../../interface/line.chart.interface';
 import { CreatLineDto } from '../../model/DTO/line/create_line.dto';
-import { UpdateLineDto } from '../../model/DTO/line/update_line.dto';
 import { httpUrl } from '../../config/config';
-import { CreatMessageDto } from '../../model/DTO/message/create_message.dto';
-import { QueryMessageDto } from '../../model/DTO/message/queryMessageDto';
+import {MongoRepository} from 'typeorm';
+import {Type as MongoType} from '../../model/mongoEntity/type.entity';
+import {Message as MongoMessage} from '../../model/mongoEntity/message.entity';
+import {Line as MongoLine} from '../../model/mongoEntity/line.entity';
+import {MessageGroup as MongoMessageGroup} from '../../model/mongoEntity/messageGroup.entity';
+import {MessageUser, MessageUser as MongoMessageUser} from '../../model/mongoEntity/messageUser.entity';
+import {ApiException} from '../../common/error/exceptions/api.exception';
+import {ApiErrorCode} from '../../config/api-error-code.enum';
+import {UpdateLineDto} from '../../model/DTO/line/update_line.dto';
+import {QueryMessageDto} from '../../model/DTO/message/queryMessageDto';
+import {CreatMessageDto} from '../../model/DTO/message/create_message.dto';
+import {formatDate} from '../../utils/data-time';
+import {MessageUserDto} from '../../model/DTO/message/message_user.dto';
+import {QueryMessageUserDto} from '../../model/DTO/message/query_message_user.dto';
+import {QueryUserList} from '../../model/DTO/message/query_user_list.dto';
+import {QueryUserMessageListDto} from '../../model/DTO/message/query_user_message_list.dto';
 
 @Injectable()
 export class MessageService {
   constructor(
-    @InjectModel('Message') private readonly messageModel: Model<Message>,
-    @InjectModel('Type') private readonly typeModel: Model<Type>,
-    @InjectModel('Line') private readonly lineModel: Model<Line>,
+
+    @InjectRepository(MongoType) private readonly mongoTypeRepository: MongoRepository<MongoType>,
+    @InjectRepository(MongoMessage) private readonly mongoMessageRepository: MongoRepository<MongoMessage>,
+    @InjectRepository(MongoMessageUser) private readonly mongoMessageUserRepository: MongoRepository<MongoMessageUser>,
+    @InjectRepository(MongoLine) private readonly mongoLineRepository: MongoRepository<MongoLine>,
+    @InjectRepository(MongoMessageGroup) private readonly mongoMessageGroupRepository: MongoRepository<MongoMessageGroup>,
     private readonly httpService: HttpService,
   ) {}
 
@@ -34,12 +45,10 @@ export class MessageService {
     obj.status = 1;
     obj.userName = currentUser.data.data.data.name;
     obj.ip = line.ip || '';
-    const createdLine = new this.lineModel(obj);
     try {
-      const res = await createdLine.save();
-      return { success: true, data: res, message: 'success' };
+      return await this.mongoLineRepository.updateOne( { userId: obj.userId }, { $set: obj }, { upsert: true });
     } catch (e) {
-      return { success: false, data: null, message: 'fail' };
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
   }
 
@@ -48,25 +57,22 @@ export class MessageService {
    */
   async userOutLine(line: UpdateLineDto) {
     const where = { userId: line.userId };
-    const update = { $set: { status: 0 } };
     try {
-      const res = await this.lineModel.updateOne(where, update);
-      return { success: true, data: res, message: 'success' };
+      return await this.mongoLineRepository.updateOne( { userId: line.userId }, { $set: { status: 0, wsId: '' } }, { upsert: true });
     } catch (e) {
-      return { success: true, data: null, message: 'fail' };
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
   }
 
   /**
-   * 用户状态
+   * 查询用户状态
    * @param userId
    */
   async findUserStatus(userId: string) {
     try {
-      const res = await this.lineModel.find({ userId }).exec();
-      return { success: true, data: res, message: 'success' };
+      return await this.mongoLineRepository.find({userId});
     } catch (e) {
-      return { success: true, data: null, message: 'fail' };
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
   }
 
@@ -74,16 +80,28 @@ export class MessageService {
    * 移除状态
    * @param userId
    */
-  async deleteUser(userId: string) {
-    return this.lineModel.deleteOne({ userId });
+  async deleteUser(userIds: Array<string | number>) {
+    return this.mongoLineRepository.deleteMany(userIds);
   }
 
   /**
-   * 查询用户列表
+   * 查询用户列表（全部）
    */
   async getUserList() {
     try {
-      const res = await this.lineModel.find();
+      const res = await this.mongoLineRepository.find();
+      return { success: true, data: res, message: '查询成功' };
+    } catch (e) {
+      return { success: true, data: [], message: '查询失败' };
+    }
+  }
+
+  /**
+   * 查询群组列表（全部）
+   */
+  async getGroupList() {
+    try {
+      const res = await this.mongoLineRepository.find();
       return { success: true, data: res, message: '查询成功' };
     } catch (e) {
       return { success: true, data: [], message: '查询失败' };
@@ -94,25 +112,21 @@ export class MessageService {
    * 查询用户的消息列表
    */
   async getUserMessageList(query: QueryMessageDto) {
-    console.log(query);
     try {
-      const res = await this.messageModel
-        .where('to', query.to)
-        .exec();
+      const res = await this.mongoMessageRepository.find({to: query.to});
       return { success: true, data: res, message: '查询成功' };
     } catch (e) {
       return { success: true, data: [], message: '查询失败' };
     }
   }
   /**
-   * 查询用户
+   * 查询用户状态
    */
   async getUser(userId: string) {
     try {
-      const res = await this.lineModel.find({ userId }).exec();
-      return { success: true, data: res, message: '查询成功' };
+      return await this.mongoLineRepository.find({userId});
     } catch (e) {
-      return { success: true, data: [], message: '查询失败' };
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
   }
 
@@ -121,21 +135,178 @@ export class MessageService {
    * @param message
    */
   async saveMessage(message: CreatMessageDto) {
-    const obj = new CreatMessageDto();
+    const obj = new MongoMessage();
     obj.content = message.content;
     obj.type = message.type;
     obj.to = message.to;
     obj.from = message.from;
-    obj.time = new Date();
+    obj.time = new Date().getTime() + '';
     obj.user = message.from;
     obj.operate = '';
     obj.status = 0;
-    const createdMessage = new this.messageModel(obj);
     try {
-      const res = await createdMessage.save();
-      return { success: true, data: res, message: 'success' };
+      return await this.mongoMessageRepository.insertOne(obj);
     } catch (e) {
-      return { success: false, data: null, message: 'fail' };
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
+  }
+
+  /**
+   * 添加用户
+   * @param messageUser
+   */
+  public async addMessageUser(messageUser: MessageUserDto) {
+    try {
+      let user: MessageUser;
+      try {
+        user = await this.findMessageUser({userId: messageUser.userId});
+      } catch (e) {
+        throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+      }
+      if (!user) {
+        const messUser: MongoMessageUser = new MongoMessageUser();
+        messUser.userId = messageUser.userId;
+        messUser.id = messageUser.userId;
+        messUser.createTime = new Date().getTime();
+        messUser.friends = '';
+        messUser.groups = '';
+        messUser.status = 1;
+        messUser.userName = messageUser.userName;
+        try {
+          return await this.createMessageUser(messUser);
+        } catch (e) {
+          throw new ApiException('创建失败', ApiErrorCode.USER_LIST_FILED, 200);
+        }
+      } else {
+        return user;
+      }
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查找用户用户
+   * @param messageUser
+   */
+  public async findMessageUser(messageUser: QueryMessageUserDto) {
+    try {
+          const res = await this.mongoMessageUserRepository.find();
+          return await this.mongoMessageUserRepository.findOne({userId: messageUser.userId});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查找用户用户
+   * @param messageUser
+   */
+  public async createMessageUser(messageUser: MessageUserDto) {
+    try {
+      return await this.mongoMessageUserRepository.insertOne(messageUser);
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查找用户
+   * @param queryUserFriends
+   */
+  public async queryUserInfo(queryUserList: QueryUserList) {
+    try {
+        const userId = Number(queryUserList.userId);
+        return await this.mongoMessageUserRepository.findOne({userId});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查找用户群组
+   * @param queryUserFriends
+   */
+  public async queryUserGroups(queryUserList: QueryUserList) {
+    try {
+      const userId = Number(queryUserList.userId);
+      return await this.mongoMessageUserRepository.findOne({userId});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 批量查找群组
+   * @param queryUserFriends
+   */
+  public async queryManyUserGroups(queryUserList: QueryUserList) {
+    try {
+      return await this.mongoMessageUserRepository.findOne({userId: Number(queryUserList.userId)});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 批量查找用户
+   * @param queryUserFriends
+   */
+  public async queryManyUserFriends(userIds: Array<number | string>) {
+    try {
+      const user = userIds.map((item: string) => {
+        return Number(item);
+      });
+      return await this.mongoLineRepository.find({where: {userId: {$in: user}}});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查找聊天记录
+   * @param params
+   */
+  public async queryUserMessageListAll(params: QueryUserMessageListDto) {
+      try {
+          const time = new Date().setHours(0, 0, 0, 0) - 86400000 * 3;
+          const formId = Number(params.fromId)
+          const userId = Number(params.userId)
+          return await this.mongoMessageRepository.find({where: {
+            to: {
+              $in: [formId, userId],
+            },
+            from: {
+              $in: [formId, userId],
+            },
+            time: {
+              $gt: params.minTime ? params.minTime : time}}});
+      } catch (e) {
+          console.log(e)
+          throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+      }
+  }
+
+  /**
+   * 查找通知（聊天）
+   * @param params
+   */
+  public async messageByToUser(params: QueryUserMessageListDto) {
+    try {
+      const time = new Date().setHours(0, 0, 0, 0) - 86400000 * 3;
+      return await this.mongoMessageRepository.find({where: {to: Number(params.userId), time: {$gt: params.minTime ? params.minTime : time}}});
+    } catch (e) {
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
+  }
+
+  /**
+   * 查询用户信息
+   * @param id
+   */
+  public async findUserInfo(ids: Array<number |string>) {
+    return await this.httpService
+        .get(`${httpUrl.userApi}/user/infoByIds`, {params: {ids}})
+        .toPromise();
   }
 }

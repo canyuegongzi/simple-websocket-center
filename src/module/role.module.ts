@@ -7,7 +7,7 @@ import {Authority} from '../model/entity/authority.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Role, Authority]),
+    TypeOrmModule.forFeature([Role, Authority], 'mysqlCon'),
   ],
   controllers: [RoleController],
   providers: [RoleService],

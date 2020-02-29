@@ -11,7 +11,7 @@ import {Role} from '../model/entity/role.entity';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     forwardRef(() => AuthModule),   // 处理模块间的循环依赖
-    TypeOrmModule.forFeature([User, Role]),
+    TypeOrmModule.forFeature([User, Role], 'mysqlCon'),
   ],
   controllers: [UserController],
   providers: [UserService],

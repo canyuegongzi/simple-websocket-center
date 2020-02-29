@@ -7,7 +7,7 @@ import {User} from '../model/entity/user.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Organization, User]),
+    TypeOrmModule.forFeature([Organization, User], 'mysqlCon'),
   ],
   controllers: [OrganizationController],
   providers: [OrganizationService],

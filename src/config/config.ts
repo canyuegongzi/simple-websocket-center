@@ -10,12 +10,15 @@ export const redisConfig = {
 
 export const mongoDbConfig = {
     name: 'simple-chart-center',
-    // url: 'mongodb://47.106.104.22/simple_message_center',
+    url: 'mongodb://127.0.0.1/simple_message_center',
+};
+
+export const mysqlConfig = {
+    name: 'simple-chart-center',
     url: 'mongodb://127.0.0.1/simple_message_center',
 };
 
 export const httpUrl = {
-  // userApi: 'http://47.106.104.22:8881',
   userApi: 'http://127.0.0.1:8881',
 };
 export default config;

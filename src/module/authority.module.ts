@@ -10,7 +10,7 @@ import {UserService} from '../service/service/user.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Authority, User, Role]),
+    TypeOrmModule.forFeature([Authority, User, Role], 'mysqlCon'),
   ],
   controllers: [AuthorityController],
   providers: [AuthorityService, RoleService, UserService],
