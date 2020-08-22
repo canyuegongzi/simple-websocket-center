@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Authority } from '../../model/entity/authority.entity';
-import {ApiException} from '../../common/error/exceptions/api.exception';
-import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {Role} from '../../model/entity/role.entity';
-import { User } from '../../model/entity/user.entity';
+import { Authority } from '../model/entity/authority.entity';
+import {ApiException} from '../common/error/exceptions/api.exception';
+import {ApiErrorCode} from '../config/api-error-code.enum';
+import {Role} from '../model/entity/role.entity';
+import { User } from '../model/entity/user.entity';
 
 @Injectable()
 export class ConfigService {

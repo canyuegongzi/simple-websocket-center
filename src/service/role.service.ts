@@ -1,14 +1,14 @@
 import { Injectable, HttpException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Role } from '../../model/entity/role.entity';
-import { CreateRoleDto } from '../../model/DTO/role/create_role.dto';
-import { UpdateRoleDto } from '../../model/DTO/role/update_role.dto';
-import {ApiException} from '../../common/error/exceptions/api.exception';
-import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {QueryRoleDto} from '../../model/DTO/role/query_role.dto';
-import {AddAuthDto} from '../../model/DTO/role/add_auth';
-import {Authority} from '../../model/entity/authority.entity';
+import { Role } from '../model/entity/role.entity';
+import { CreateRoleDto } from '../model/DTO/role/create_role.dto';
+import { UpdateRoleDto } from '../model/DTO/role/update_role.dto';
+import {ApiException} from '../common/error/exceptions/api.exception';
+import {ApiErrorCode} from '../config/api-error-code.enum';
+import {QueryRoleDto} from '../model/DTO/role/query_role.dto';
+import {AddAuthDto} from '../model/DTO/role/add_auth';
+import {Authority} from '../model/entity/authority.entity';
 
 @Injectable()
 export class RoleService {

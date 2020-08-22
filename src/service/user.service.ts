@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CreateUserDto } from '../../model/DTO/user/creat_user.dto';
-import { LoginParamsDto } from '../../model/DTO/user/login_params.dto';
-import {Role} from '../../model/entity/role.entity';
-import {QueryUserDto} from '../../model/DTO/user/query_user.dto';
-import {ApiException} from '../../common/error/exceptions/api.exception';
-import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {User} from '../../model/entity/user.entity';
+import { CreateUserDto } from '../model/DTO/user/creat_user.dto';
+import { LoginParamsDto } from '../model/DTO/user/login_params.dto';
+import {Role} from '../model/entity/role.entity';
+import {QueryUserDto} from '../model/DTO/user/query_user.dto';
+import {ApiException} from '../common/error/exceptions/api.exception';
+import {ApiErrorCode} from '../config/api-error-code.enum';
+import {User} from '../model/entity/user.entity';
 
 @Injectable()
 export class UserService {

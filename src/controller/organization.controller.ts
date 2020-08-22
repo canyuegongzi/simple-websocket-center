@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
-import { OrganizationService } from '../service/service/organization.service';
+import { OrganizationService } from '../service/organization.service';
 import {CreateOrganizationDto} from '../model/DTO/organization/create_organization.dto';
 import {AddUserDto} from '../model/DTO/organization/add_user.dto';
 import {QueryOrganizationDto} from '../model/DTO/organization/query_organization.dto';

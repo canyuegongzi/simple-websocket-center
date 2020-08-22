@@ -4,7 +4,7 @@ import { LoginParamsDto } from '../model/DTO/user/login_params.dto';
 import { AuthService } from '../common/auth/auth.service';
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
-import { UserService } from '../service/service/user.service';
+import { UserService } from '../service/user.service';
 import { RedisService } from 'nestjs-redis';
 import config, {redisConfig} from '../config/config';
 import {AuthGuard} from '@nestjs/passport';

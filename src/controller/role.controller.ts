@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
-import { RoleService } from '../service/service/role.service';
+import { RoleService } from '../service/role.service';
 import { CreateRoleDto } from '../model/DTO/role/create_role.dto';
 import { UpdateRoleDto } from '../model/DTO/role/update_role.dto';
 import {QueryRoleDto} from '../model/DTO/role/query_role.dto';

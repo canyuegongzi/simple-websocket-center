@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ObjectIdColumn, PrimaryGeneratedColumn} from 'typeorm';
 
 @Entity()
-export class Message {
+export class MessageEntity {
   @ObjectIdColumn()
   id: string;
 

@@ -1,4 +1,3 @@
-import {Message} from '../model/mongoEntity/message.entity';
 
 export namespace MessageList {
     export function dealMessageByToUser(data) {
@@ -26,7 +25,7 @@ export namespace MessageList {
                 }
             }
         }
-        console.log(froms)
+        console.log(froms);
         return  { dest, froms };
     }
 }

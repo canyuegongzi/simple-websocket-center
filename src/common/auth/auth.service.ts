@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { UserService } from '../../service/service/user.service';
+import { UserService } from '../../service/user.service';
 import { User } from '../../model/entity/user.entity';
 import {JwtPayloadToken} from './interfaces/jwt-payloadJwtPayload.interfface';
 

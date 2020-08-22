@@ -1,7 +1,7 @@
 import {Body, Controller, Get, Inject, Post, Query, UseInterceptors} from '@nestjs/common';
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
-import { MessageService } from '../service/service/message.service';
+import { MessageService } from '../service/message.service';
 import { QueryMessageDto } from '../model/DTO/message/queryMessageDto';
 import {MessageUserDto} from '../model/DTO/message/message_user.dto';
 import {QueryUserList} from '../model/DTO/message/query_user_list.dto';
@@ -82,6 +82,7 @@ export class MessageController {
     try {
      try {
        const res = await this.messageService.queryUserInfo(params);
+       // @ts-ignore
        const friends = res.friends.split('，');
        try {
          const friendsLine = await this.messageService.queryManyUserFriends(friends);

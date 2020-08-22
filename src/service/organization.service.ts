@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {Repository} from 'typeorm';
-import { CreateOrganizationDto } from '../..//model/DTO/organization/create_organization.dto';
-import { Organization } from '../../model/entity/organization.entity';
-import {ApiException} from '../../common/error/exceptions/api.exception';
-import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {User} from '../../model/entity/user.entity';
-import {AddUserDto} from '../../model/DTO/organization/add_user.dto';
-import {QueryOrganizationDto} from '../../model/DTO/organization/query_organization.dto';
-import { listToTree} from '../../utils/tree-data';
-import {UpdateOrganizationDto} from '../../model/DTO/organization/update_organization.dto';
-import {DeleteOrganizationDto} from '../../model/DTO/organization/delete_organization.dto';
+import { Organization } from '../model/entity/organization.entity';
+import {ApiException} from '../common/error/exceptions/api.exception';
+import {ApiErrorCode} from '../config/api-error-code.enum';
+import {User} from '../model/entity/user.entity';
+import {AddUserDto} from '../model/DTO/organization/add_user.dto';
+import {QueryOrganizationDto} from '../model/DTO/organization/query_organization.dto';
+import { listToTree} from '../utils/tree-data';
+import {UpdateOrganizationDto} from '../model/DTO/organization/update_organization.dto';
+import {DeleteOrganizationDto} from '../model/DTO/organization/delete_organization.dto';
+import {CreateOrganizationDto} from '../model/DTO/organization/create_organization.dto';
 
 @Injectable()
 export class OrganizationService {
@@ -73,10 +73,10 @@ export class OrganizationService {
                     .of(usersId)
                     .addAndRemove(addUserDto.userId, organization.users.map( u => u.id));
                 return await this.organizationRepository.findOne(usersId, {relations: [ 'users' ]});
-            }catch (e) {
+            } catch (e) {
                 throw new ApiException('用户查询失败', ApiErrorCode.ORIZATION_CREATED_FILED, 200);
             }
-        }catch (e) {
+        } catch (e) {
           throw new ApiException('操作失败', ApiErrorCode.ORIZATION_CREATED_FILED, 200);
         }
     }
@@ -118,7 +118,7 @@ export class OrganizationService {
                 .getManyAndCount();
             const treeData = listToTree(res[0], 'id', 'parentId', 'children');
             return  { data: treeData, count: res[1]};
-        }catch (e) {
+        } catch (e) {
             throw new ApiException('查询失败', ApiErrorCode.USER_LIST_FILED, 200);
         }
     }
@@ -150,7 +150,7 @@ export class OrganizationService {
             let currentOrganName: string;
             try {
                 user = await this.userRepository.findOne(params.leaderId);
-            }catch (e) {
+            } catch (e) {
                 throw new ApiException('领导人不存在', ApiErrorCode.ORIZATION_UPDATE_USER_NOT, 200);
             }
             if (Number(params.parentId) !== -1) {
@@ -169,7 +169,7 @@ export class OrganizationService {
                 .set({desc: params.desc, name: params.name , parentId: params.parentId, leader: user, parentName: currentOrganName})
                 .where('id = :id', { id: params.id })
                 .execute();
-        }catch (e) {
+        } catch (e) {
             console.log(e);
             throw new ApiException('操作失败', ApiErrorCode.ORIZATION_UPDATE_FILED, 200);
         }
@@ -196,7 +196,7 @@ export class OrganizationService {
                     .whereInIds(params.id)
                     .execute();
             }
-        }catch (e) {
+        } catch (e) {
             throw new ApiException('操作失败', ApiErrorCode.ORIZATION_DELETE_FILED, 200);
         }
     }

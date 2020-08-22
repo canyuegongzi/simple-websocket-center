@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Role } from '../model/entity/role.entity';
 import {Authority} from '../model/entity/authority.entity';
 import {User} from '../model/entity/user.entity';
-import {ConfigService} from '../service/service/config.service';
+import {ConfigService} from '../service/config.service';
 import {ConfigController} from '../controller/config.controller';
 import {PassportModule} from '@nestjs/passport';
 import {AuthModule} from '../common/auth/auth.module';

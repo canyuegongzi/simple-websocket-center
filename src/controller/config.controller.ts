@@ -2,7 +2,7 @@ import {Body, Controller, Get, Inject, Post, Query, Req, Session, UseGuards, Use
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
 import {AuthGuard} from '@nestjs/passport';
-import {ConfigService} from '../service/service/config.service';
+import {ConfigService} from '../service/config.service';
 import {ApiErrorCode} from '../config/api-error-code.enum';
 
 @Controller('config')

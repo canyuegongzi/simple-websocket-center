@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Inject, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
-import { InitService } from '../service/service/init.service';
+import { InitService } from '../service/init.service';
 
 @Controller('chartInit')
 export class InitController {

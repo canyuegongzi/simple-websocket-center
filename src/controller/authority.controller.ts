@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { TransformInterceptor } from '../common/shared/interceptors/transform.interceptor';
 import { LoggingInterceptor } from '../common/shared/interceptors/logging.interceptor';
-import { AuthorityService } from '../service/service/authority.service';
+import { AuthorityService } from '../service/authority.service';
 import {CreateAuthorityDto} from '../model/DTO/authority/create_authority.dto';
 import {UpdateAuthorityDto} from '../model/DTO/authority/update_authority.dto';
 import {QueryAuthorityDto} from '../model/DTO/authority/query_authority.dto';

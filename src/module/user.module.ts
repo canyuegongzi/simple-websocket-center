@@ -4,7 +4,7 @@ import { PassportModule } from '@nestjs/passport';
 import { UserController } from '../controller/user.controller';
 import { AuthModule } from '../common/auth/auth.module';
 import { User } from '../model/entity/user.entity';
-import { UserService } from '../service/service/user.service';
+import { UserService } from '../service/user.service';
 import {Role} from '../model/entity/role.entity';
 
 @Module({

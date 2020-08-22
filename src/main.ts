@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import { AppModule } from './app.module';
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { Transport } from '@nestjs/common/enums/transport.enum';
 import * as session from 'express-session';
 import { HttpExceptionFilter } from './common/error/filters/http-exception.filter';
 import { ApiParamsValidationPipe } from './common/error/pipe/api-params-validation.pipe';
@@ -31,6 +30,7 @@ async function bootstrap() {
   // });
   await app.startAllMicroservicesAsync();
   app.useGlobalPipes(new ApiParamsValidationPipe());
+  app.setGlobalPrefix(config.globalPrefix);
   await app.listen(config.port);
 }
 bootstrap();

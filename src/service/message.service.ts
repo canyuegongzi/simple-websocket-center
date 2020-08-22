@@ -1,34 +1,33 @@
 import { HttpService, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreatLineDto } from '../../model/DTO/line/create_line.dto';
-import { httpUrl } from '../../config/config';
-import {MongoRepository} from 'typeorm';
-import {Type as MongoType} from '../../model/mongoEntity/type.entity';
-import {Message as MongoMessage} from '../../model/mongoEntity/message.entity';
-import {Line as MongoLine} from '../../model/mongoEntity/line.entity';
-import {MessageGroup as MongoMessageGroup} from '../../model/mongoEntity/messageGroup.entity';
-import {MessageUser, MessageUser as MongoMessageUser} from '../../model/mongoEntity/messageUser.entity';
-import {ApiException} from '../../common/error/exceptions/api.exception';
-import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {UpdateLineDto} from '../../model/DTO/line/update_line.dto';
-import {QueryMessageDto} from '../../model/DTO/message/queryMessageDto';
-import {CreatMessageDto} from '../../model/DTO/message/create_message.dto';
-import {formatDate} from '../../utils/data-time';
-import {MessageUserDto} from '../../model/DTO/message/message_user.dto';
-import {QueryMessageUserDto} from '../../model/DTO/message/query_message_user.dto';
-import {QueryUserList} from '../../model/DTO/message/query_user_list.dto';
-import {QueryUserMessageListDto} from '../../model/DTO/message/query_user_message_list.dto';
+import { CreatLineDto } from '../model/DTO/line/create_line.dto';
+import { httpUrl } from '../config/config';
+import {ApiErrorCode} from '../config/api-error-code.enum';
+import {UpdateLineDto} from '../model/DTO/line/update_line.dto';
+import {QueryMessageDto} from '../model/DTO/message/queryMessageDto';
+import {CreatMessageDto} from '../model/DTO/message/create_message.dto';
+import {MessageUserDto} from '../model/DTO/message/message_user.dto';
+import {QueryMessageUserDto} from '../model/DTO/message/query_message_user.dto';
+import {QueryUserList} from '../model/DTO/message/query_user_list.dto';
+import {QueryUserMessageListDto} from '../model/DTO/message/query_user_message_list.dto';
+import {MongoRepository, Repository} from 'typeorm';
+import {InjectRepository} from '@nestjs/typeorm';
+import {MessageGroupEntity} from '../model/mongoEntity/messageGroup.entity';
+import {TypeEntity} from '../model/mongoEntity/type.entity';
+import {MessageEntity} from '../model/mongoEntity/message.entity';
+import {MessageUserEntity} from '../model/mongoEntity/messageUser.entity';
+import {LineEntity} from '../model/mongoEntity/line.entity';
+import {ApiException} from '../common/error/exceptions/api.exception';
 
 @Injectable()
 export class MessageService {
   constructor(
-
-    @InjectRepository(MongoType) private readonly mongoTypeRepository: MongoRepository<MongoType>,
-    @InjectRepository(MongoMessage) private readonly mongoMessageRepository: MongoRepository<MongoMessage>,
-    @InjectRepository(MongoMessageUser) private readonly mongoMessageUserRepository: MongoRepository<MongoMessageUser>,
-    @InjectRepository(MongoLine) private readonly mongoLineRepository: MongoRepository<MongoLine>,
-    @InjectRepository(MongoMessageGroup) private readonly mongoMessageGroupRepository: MongoRepository<MongoMessageGroup>,
-    private readonly httpService: HttpService,
+      @InjectRepository(MessageGroupEntity) private readonly messageGroupRepository: Repository<MessageGroupEntity>,
+      @InjectRepository(TypeEntity) private readonly mongoTypeRepository: MongoRepository<TypeEntity>,
+      @InjectRepository(MessageEntity) private readonly mongoMessageRepository: MongoRepository<MessageEntity>,
+      @InjectRepository(MessageUserEntity) private readonly mongoMessageUserRepository: MongoRepository<MessageUserEntity>,
+      @InjectRepository(LineEntity) private readonly mongoLineRepository: MongoRepository<LineEntity>,
+      @InjectRepository(MessageGroupEntity) private readonly mongoMessageGroupRepository: MongoRepository<MessageGroupEntity>,
+      private readonly httpService: HttpService,
   ) {}
 
   /**
@@ -36,8 +35,8 @@ export class MessageService {
    */
   async userOnline(line: CreatLineDto, wsId: string) {
     const currentUser = await this.httpService
-      .get(`${httpUrl.userApi}/user/getUserInfo?id=${line.userId}`)
-      .toPromise();
+        .get(`${httpUrl.userApi}/user/getUserInfo?id=${line.userId}`)
+        .toPromise();
     const obj = new CreatLineDto();
     obj.userId = line.userId;
     obj.wsId = wsId;
@@ -135,7 +134,7 @@ export class MessageService {
    * @param message
    */
   async saveMessage(message: CreatMessageDto) {
-    const obj = new MongoMessage();
+    const obj = new MessageEntity();
     obj.content = message.content;
     obj.type = message.type;
     obj.to = message.to;
@@ -157,14 +156,14 @@ export class MessageService {
    */
   public async addMessageUser(messageUser: MessageUserDto) {
     try {
-      let user: MessageUser;
+      let user: MessageUserEntity;
       try {
         user = await this.findMessageUser({userId: messageUser.userId});
       } catch (e) {
         throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
       }
       if (!user) {
-        const messUser: MongoMessageUser = new MongoMessageUser();
+        const messUser: MessageUserEntity = new MessageUserEntity();
         messUser.userId = messageUser.userId;
         messUser.id = messageUser.userId;
         messUser.createTime = new Date().getTime();
@@ -191,8 +190,8 @@ export class MessageService {
    */
   public async findMessageUser(messageUser: QueryMessageUserDto) {
     try {
-          const res = await this.mongoMessageUserRepository.find();
-          return await this.mongoMessageUserRepository.findOne({userId: messageUser.userId});
+      const res = await this.mongoMessageUserRepository.find();
+      return await this.mongoMessageUserRepository.findOne({userId: messageUser.userId});
     } catch (e) {
       throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
@@ -216,8 +215,8 @@ export class MessageService {
    */
   public async queryUserInfo(queryUserList: QueryUserList) {
     try {
-        const userId = Number(queryUserList.userId);
-        return await this.mongoMessageUserRepository.findOne({userId});
+      const userId = Number(queryUserList.userId);
+      return await this.mongoMessageUserRepository.findOne({userId});
     } catch (e) {
       throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
     }
@@ -268,23 +267,23 @@ export class MessageService {
    * @param params
    */
   public async queryUserMessageListAll(params: QueryUserMessageListDto) {
-      try {
-          const time = new Date().setHours(0, 0, 0, 0) - 86400000 * 3;
-          const formId = Number(params.fromId)
-          const userId = Number(params.userId)
-          return await this.mongoMessageRepository.find({where: {
-            to: {
-              $in: [formId, userId],
-            },
-            from: {
-              $in: [formId, userId],
-            },
-            time: {
-              $gt: params.minTime ? params.minTime : time}}});
-      } catch (e) {
-          console.log(e)
-          throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
-      }
+    try {
+      const time = new Date().setHours(0, 0, 0, 0) - 86400000 * 3;
+      const formId = Number(params.fromId);
+      const userId = Number(params.userId);
+      return await this.mongoMessageRepository.find({where: {
+          to: {
+            $in: [formId, userId],
+          },
+          from: {
+            $in: [formId, userId],
+          },
+          time: {
+            $gt: params.minTime ? params.minTime : time}}});
+    } catch (e) {
+      console.log(e);
+      throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
+    }
   }
 
   /**
@@ -304,7 +303,7 @@ export class MessageService {
    * 查询用户信息
    * @param id
    */
-  public async findUserInfo(ids: Array<number |string>) {
+  public async findUserInfo(ids: Array<number |string>): Promise<any> {
     return await this.httpService
         .get(`${httpUrl.userApi}/user/infoByIds`, {params: {ids}})
         .toPromise();

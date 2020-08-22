@@ -6,16 +6,13 @@ import {
 } from '@nestjs/websockets';
 import { Client, Server } from 'socket.io';
 import { Inject } from '@nestjs/common';
-import { MessageService } from '../../service/service/message.service';
+import { MessageService } from '../../service/message.service';
 import { CreatLineDto } from '../../model/DTO/line/create_line.dto';
 import { UpdateLineDto } from '../../model/DTO/line/update_line.dto';
 import {ApiException} from '../error/exceptions/api.exception';
 import {ApiErrorCode} from '../../config/api-error-code.enum';
-import {Line} from '../../model/mongoEntity/line.entity';
-import {CreatMessageDto} from '../../model/DTO/message/create_message.dto';
-import {formatDate} from '../../utils/data-time';
 
-@WebSocketGateway(9001 )
+@WebSocketGateway(9006 )
 export class ChatsGateway {
   @WebSocketServer()
   server: Server;

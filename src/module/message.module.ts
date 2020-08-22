@@ -1,25 +1,22 @@
 import { forwardRef, HttpModule, Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { MessageController } from '../controller/message.controller';
-import { MessageService } from '../service/service/message.service';
-// import { Message } from '../model/entity/message.entity';
-import { Message} from '../model/mongoEntity/message.entity';
-import { ChatsGateway } from '../common/event/chat.gateway';
-import { GatewaysExceptionFilter } from '../common/error/filters/ws-exception.filter';
-import {Type} from '../model/mongoEntity/type.entity';
-import {Line} from '../model/mongoEntity/line.entity';
-import {RequestMessage} from '../model/mongoEntity/requestMessage.entity';
-import {MessageUser} from '../model/mongoEntity/messageUser.entity';
-import {MessageGroup} from '../model/mongoEntity/messageGroup.entity';
+import { MessageService } from '../service/message.service';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {MessageGroupEntity} from '../model/mongoEntity/messageGroup.entity';
+import {LineEntity} from '../model/mongoEntity/line.entity';
+import {MessageEntity} from '../model/mongoEntity/message.entity';
+import {MessageUserEntity} from '../model/mongoEntity/messageUser.entity';
+import {RequestMessageEntity} from '../model/mongoEntity/requestMessage.entity';
+import {TypeEntity} from '../model/mongoEntity/type.entity';
+import {ChatServerGateway} from '../service/chatServer.gateway';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([LineEntity, MessageEntity, MessageGroupEntity, MessageUserEntity, RequestMessageEntity, TypeEntity] ),
     HttpModule,
-    // TypeOrmModule.forFeature([Message], 'mysqlCon'),
-    TypeOrmModule.forFeature([Message, Type, Line, RequestMessage, MessageUser, MessageGroup], 'mongoCon'),
   ],
-  providers: [MessageService,  ChatsGateway, GatewaysExceptionFilter],
+  providers: [MessageService, ChatServerGateway],
   controllers: [MessageController],
-  exports: [],
+  exports: [ChatServerGateway],
 })
 export class MessageModule {}
