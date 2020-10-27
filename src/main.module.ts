@@ -12,9 +12,14 @@ import {MessageUserEntity} from './model/mongoEntity/messageUser.entity';
 import {RequestMessageEntity} from './model/mongoEntity/requestMessage.entity';
 import {TypeEntity} from './model/mongoEntity/type.entity';
 import {AmqpMessageModule} from './module/amqpMessage.module';
+import {redisConfig} from './config/config';
+import {EventModule} from './module/event.module';
+import {UserMap} from './model/mongoEntity/friend.entity';
+import {FriendModule} from './module/friend.module';
+import {ImAddRequestEntity} from './model/mongoEntity/imAddRequest.entity';
 @Module({
   imports: [
-    // RedisModule.register(redisConfig),
+    RedisModule.register(redisConfig),
     TypeOrmModule.forRoot(
         {
             name: 'default',
@@ -24,16 +29,10 @@ import {AmqpMessageModule} from './module/amqpMessage.module';
             useNewUrlParser: true,
             database: 'simple_message_center',
             synchronize: true,
-            entities: [LineEntity, MessageEntity, MessageGroupEntity, MessageUserEntity, RequestMessageEntity, TypeEntity ],
+            // tslint:disable-next-line:max-line-length
+            entities: [LineEntity, MessageEntity, MessageGroupEntity, MessageUserEntity, RequestMessageEntity, TypeEntity, UserMap, ImAddRequestEntity ],
         },
     ),
-      /*MongooseModule.forRoot('mongodb://localhost', {
-          name: 'mongoCon',
-          port: 27017,
-          useNewUrlParser: true,
-          database: 'simple_message_center',
-          synchronize: true,
-      }),*/
     TypeOrmModule.forRoot(
         {
           type: 'mysql',
@@ -47,7 +46,7 @@ import {AmqpMessageModule} from './module/amqpMessage.module';
           synchronize: true,
         },
     ),
-    MessageModule,
+    MessageModule, EventModule, FriendModule,
     AmqpMessageModule,
   ],
   controllers: [ AppController ],

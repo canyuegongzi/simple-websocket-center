@@ -9,13 +9,14 @@ import {MessageUserEntity} from '../model/mongoEntity/messageUser.entity';
 import {RequestMessageEntity} from '../model/mongoEntity/requestMessage.entity';
 import {TypeEntity} from '../model/mongoEntity/type.entity';
 import {ChatServerGateway} from '../service/chatServer.gateway';
+import {RedisCacheService} from '../service/redisCache.service';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([LineEntity, MessageEntity, MessageGroupEntity, MessageUserEntity, RequestMessageEntity, TypeEntity] ),
     HttpModule,
   ],
-  providers: [MessageService, ChatServerGateway],
+  providers: [MessageService, ChatServerGateway, RedisCacheService],
   controllers: [MessageController],
   exports: [ChatServerGateway],
 })

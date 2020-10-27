@@ -3,22 +3,55 @@ import moment = require('moment');
 import {Ctx, MessagePattern, Payload, RmqContext} from '@nestjs/microservices';
 import {RabbitRPC} from '@golevelup/nestjs-rabbitmq';
 import {rabbitMQConfig} from '../config/config';
+import {EventEmitter} from 'events';
+import {Emitter, NestEventEmitter} from 'nest-event';
+import {WsFriendMessageInfo} from '../model/DTO/ws/WsFriendMessageInfo';
 moment.locale('zh-cn')
 
+/**
+ * 及时通讯消息订阅
+ */
 @Injectable()
-export class AmqpMessageConsumerService {
-
-    constructor() {}
+@Emitter('emit-websocket-message')
+export class AmqpMessageConsumerService extends EventEmitter {
+    public numIndex: number = 0;
+    constructor(private readonly nestEventEmitter: NestEventEmitter) {
+        super();
+    }
 
     @RabbitRPC({
         exchange: rabbitMQConfig.websocketFriendMessageSubscribe,
-        routingKey: 'subscribe-friend-route',
+        routingKey: 'friend-route',
         queue: rabbitMQConfig.websocketFriendMessageQueue,
     })
     public taskSubscriberFriend(@Payload() message: any, @Ctx() context: RmqContext ) {
-        console.log('rabbit接收到了广播的消息队列');
-        const data: any = JSON.parse(message);
+        const data: WsFriendMessageInfo = JSON.parse(message);
         console.log(data);
+        this.numIndex ++;
+        console.log(`rabbit接收到了广播的第${this.numIndex}消息队列`);
+        this.nestEventEmitter.emitter('emit-websocket-message').emit('friend-message', data);
+        return {
+            response: 42,
+        };
+    }
+
+    @RabbitRPC({
+        exchange: rabbitMQConfig.websocketRequestExchange,
+        routingKey: 'new-request',
+        queue: rabbitMQConfig.websocketRequestQueue,
+    })
+    public taskSubscriberRequest(@Payload() message: any, @Ctx() context: RmqContext ) {
+        const data: any = JSON.parse(message);
+        console.log('好一派');
+        console.log(data);
+        this.nestEventEmitter.emitter('emit-websocket-message').emit('new-request', data);
+        /*console.log(data);
+        this.numIndex ++;
+        console.log(`rabbit接收到了广播的第${this.numIndex}消息队列`);
+        this.nestEventEmitter.emitter('emit-websocket-message').emit('friend-message', data);*/
+        return {
+            response: 42,
+        };
     }
 
     @RabbitRPC({

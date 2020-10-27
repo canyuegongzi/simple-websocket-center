@@ -6189,8 +6189,8 @@ neo-async@^2.6.0:
 
 nest-event@^1.0.8:
   version "1.0.8"
-  resolved "https://registry.yarnpkg.com/nest-event/-/nest-event-1.0.8.tgz#ac1ec9f795de4a22733cbe3b84ac01a56f090fd3"
-  integrity sha512-cfwbBExjzlbkc0RMJDYM9KlHGjkMKs+gKR/H9FuZ5wnoL42RL0WpB+cdOwajoVpZKBdu4rJYJQYFeEDJkSeyzw==
+  resolved "https://registry.npm.taobao.org/nest-event/download/nest-event-1.0.8.tgz#ac1ec9f795de4a22733cbe3b84ac01a56f090fd3"
+  integrity sha1-rB7J95XeSiJzPL47hKwBpW8JD9M=
   dependencies:
     "@nestjs-plus/discovery" "^2.0.2"
     "@nestjs/common" "^6.7.2"

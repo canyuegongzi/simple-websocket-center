@@ -17,6 +17,10 @@ import {AmqpMessageController} from '../controller/amqpMessage.controller';
                     name: rabbitMQConfig.websocketGroupMessageExchange,
                     type: 'topic',
                 },
+                {
+                    name: rabbitMQConfig.websocketRequestExchange,
+                    type: 'topic',
+                },
             ],
             uri: rabbitMQConfig.url,
         }),

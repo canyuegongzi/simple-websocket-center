@@ -1,7 +1,7 @@
 interface ReturnData {
     [type: string]: any;
 }
-export enum MessageType {
+export enum WsMessageType {
     GETLIST,
     DELETE,
     GETINFO,
@@ -9,8 +9,10 @@ export enum MessageType {
     UPDATE,
     FILEERROR,
     OPERATE,
+    WSCONNECTSUCCESS,
+    WSCONNECTFAILE,
 }
-const messageMap = {
+const WsMessageMap = {
     0: '查询成功',
     1: '删除成功',
     2: '查询成功',
@@ -18,15 +20,17 @@ const messageMap = {
     4: '更新成功',
     5: 'EXCEL失败',
     6: '操作成功',
+    7: '连接成功',
+    8: '连接失败',
 };
-export class ResultData {
+export class WsResult {
     public code: number;
     public message: string;
     public data: ReturnData;
     public success: boolean;
-    constructor(messageType: MessageType, data = null, success = true) {
+    constructor(messageType: WsMessageType, data = null, success = true) {
         this.code = 200;
-        this.message = messageMap[messageType];
+        this.message = WsMessageMap[messageType];
         this.data = data;
         this.success = success;
     }
