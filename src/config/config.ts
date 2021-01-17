@@ -9,9 +9,16 @@ export const redisConfig = {
     url: 'redis://127.0.0.1',
 };
 
+export const mongoDbConfig = {
+    name: 'simple-chart-center',
+    url: '',
+};
+
+
 export const httpUrl = {
-  userApi: 'http://127.0.0.1:9002/simple-user-center/v1.0',
-  pushApi: 'http://127.0.0.1:10001/simple-notice-center/v1.0'  ,
+  userApi: '',
+  pushApi: ''  ,
+  // userApi: 'http://127.0.0.1:8881',
 };
 export const rabbitMQConfig = {
         url: '',
