@@ -6,7 +6,7 @@ export class UserMap {
   id: ObjectID;
 
   @Column()
-  friendId: number;
+  friendId: string;
 
   @Column()
   friendName: string;
@@ -15,5 +15,5 @@ export class UserMap {
   friendIcon: string;
 
   @Column()
-  userId: number;
+  userId: string;
 }

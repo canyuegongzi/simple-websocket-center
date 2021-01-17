@@ -24,4 +24,8 @@ export class RequestAddFriendDto {
     state: boolean;
 
     callBackType: number;
+
+    createTime: number; // 创建时间
+
+    updateTime: number; // 更新时间
 }

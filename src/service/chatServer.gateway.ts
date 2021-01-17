@@ -8,6 +8,9 @@ import {EventEmitter} from 'events';
 import {Emitter, From, On} from 'nest-event';
 import {WsFriendMessageInfo} from '../model/DTO/ws/WsFriendMessageInfo';
 import {RequestAddFriendDto} from '../model/DTO/friend/requestAddFriend.dto';
+import {AffirmChatMessageDto} from '../model/DTO/messageStore/AffirmChatMessageDto';
+import {AmqpConnection} from '@golevelup/nestjs-rabbitmq';
+import {rabbitMQConfig} from '../config/config';
 
 @WebSocketGateway(9010 )
 export class ChatServerGateway extends EventEmitter implements OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit  {
@@ -16,6 +19,7 @@ export class ChatServerGateway extends EventEmitter implements OnGatewayConnecti
     constructor(
         @Inject(MessageService) private readonly messageService: MessageService,
         @Inject(RedisCacheService) private readonly redisCacheService: RedisCacheService,
+        private readonly messageClient: AmqpConnection,
     ) {
         super();
     }
@@ -112,6 +116,21 @@ export class ChatServerGateway extends EventEmitter implements OnGatewayConnecti
             } catch (e) {
                 console.log('推送失败');
             }
+        }
+    }
+
+    /**
+     * 获取客户端的消息
+     * @param client
+     * @param message
+     */
+    @SubscribeMessage('affirmMessageStatus')
+    public async getClientMessage(client, message: AffirmChatMessageDto) {
+        try {
+            await this.messageClient.publish(rabbitMQConfig.websocketAffirmMessage, 'affirm-message', JSON.stringify(message));
+            console.log('向消息队列push消息状态success');
+        } catch (e) {
+            console.log(e);
         }
     }
 }

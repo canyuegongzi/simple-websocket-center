@@ -21,6 +21,10 @@ import {AmqpMessageController} from '../controller/amqpMessage.controller';
                     name: rabbitMQConfig.websocketRequestExchange,
                     type: 'topic',
                 },
+                {
+                    name: rabbitMQConfig.websocketAffirmMessage,
+                    type: 'topic',
+                },
             ],
             uri: rabbitMQConfig.url,
         }),
@@ -30,4 +34,3 @@ import {AmqpMessageController} from '../controller/amqpMessage.controller';
     exports: [],
 })
 export class AmqpMessageModule {}
-

@@ -6,7 +6,7 @@ export class MessageGroupEntity {
     id: string;
 
     @Column({ length: 500 })
-    userId: number;
+    userId: string;
 
     @Column({ default: 0})
     status: number;

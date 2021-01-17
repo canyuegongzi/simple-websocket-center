@@ -6,16 +6,19 @@ export class ImAddRequestEntity {
   id: number;
 
   @Column()
-  targetId: number;
+  targetId: string;
 
   @Column()
   targetName: string;
 
   @Column()
+  userName: string;
+
+  @Column()
   targetIcon: string;
 
   @Column()
-  formId: number;
+  formId: string;
 
   @Column()
   type: string;
@@ -25,6 +28,12 @@ export class ImAddRequestEntity {
 
   @Column()
   state: boolean;
+
+  @Column()
+  createTime: number;
+
+  @Column()
+  updateTime: number;
 
   @Column()
   callBackType: number; // 1 未应答 2： 同意  3： 不同意

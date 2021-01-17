@@ -9,20 +9,9 @@ export const redisConfig = {
     url: 'redis://127.0.0.1',
 };
 
-export const mongoDbConfig = {
-    name: 'simple-chart-center',
-    url: 'mongodb://127.0.0.1/simple_message_center',
-};
-
-export const mysqlConfig = {
-    name: 'simple-chart-center',
-    url: 'mongodb://127.0.0.1/simple_message_center',
-};
-
 export const httpUrl = {
-  userApi: '',
-  pushApi: ''  ,
-  // userApi: 'http://127.0.0.1:8881',
+  userApi: 'http://127.0.0.1:9002/simple-user-center/v1.0',
+  pushApi: 'http://127.0.0.1:10001/simple-notice-center/v1.0'  ,
 };
 export const rabbitMQConfig = {
         url: '',
@@ -31,10 +20,19 @@ export const rabbitMQConfig = {
         websocketFriendMessageQueue: 'websocket-friend-message-queue',
         websocketRequestQueue: 'request-queue',
         websocketFriendMessageExchange: 'friend-message',
+        websocketAffirmMessage: 'affirm-message',
         websocketRequestExchange: 'request',
         websocketGroupMessageExchange: 'group-message',
         websocketGroupMessageSubscribe: 'subscribe-gm',
         websocketFriendMessageSubscribe: 'subscribe-fm',
         websocketGroupMessageQueue: 'websocket-group-message-queue',
+        websocketAffirmQueue: 'affirm-message-queue',
+};
+
+export const robotConfig = {
+    appKey: '',
+    SecretKey: '',
+    userId: '',
+    botId: ''
 };
 export default config;
