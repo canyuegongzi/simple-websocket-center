@@ -1,0 +1,549 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20210124.220046.11496.0.001.json",
+    "dumpEventTime": "2021-01-24T22:00:46Z",
+    "dumpEventTimeStamp": "1611496846948",
+    "processId": 11496,
+    "cwd": "D:\\person_project\\simple-websocket-center",
+    "commandLine": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\person_project\\simple-websocket-center\\dist\\src\\main"
+    ],
+    "nodejsVersion": "v12.16.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "12.16.0",
+      "v8": "7.8.279.23-node.31",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.0/node-v12.16.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.0/node-v12.16.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v12.16.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.18363",
+    "osVersion": "Windows 10 Pro",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 6058234,
+        "nice": 0,
+        "sys": 6077140,
+        "idle": 49741625,
+        "irq": 1490859
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 2956890,
+        "nice": 0,
+        "sys": 2206203,
+        "idle": 56713500,
+        "irq": 329062
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 6507750,
+        "nice": 0,
+        "sys": 2522562,
+        "idle": 52846281,
+        "irq": 59890
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 5155234,
+        "nice": 0,
+        "sys": 2006718,
+        "idle": 54714625,
+        "irq": 38062
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 6279796,
+        "nice": 0,
+        "sys": 2738562,
+        "idle": 52858218,
+        "irq": 48046
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 3785562,
+        "nice": 0,
+        "sys": 2102890,
+        "idle": 55988125,
+        "irq": 33515
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 6142375,
+        "nice": 0,
+        "sys": 2350796,
+        "idle": 53383406,
+        "irq": 40812
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz",
+        "speed": 1498,
+        "user": 5257218,
+        "nice": 0,
+        "sys": 2717156,
+        "idle": 53902203,
+        "irq": 36046
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "WLAN",
+        "internal": false,
+        "mac": "e8:6f:38:25:c9:1d",
+        "address": "fe80::f0bc:13f7:354c:4529",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 11
+      },
+      {
+        "name": "WLAN",
+        "internal": false,
+        "mac": "e8:6f:38:25:c9:1d",
+        "address": "10.10.10.3",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "Loopback Pseudo-Interface 1",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "vEthernet (Default Switch)",
+        "internal": false,
+        "mac": "00:15:5d:21:de:25",
+        "address": "fe80::6918:9682:16f7:e1b7",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 26
+      },
+      {
+        "name": "vEthernet (Default Switch)",
+        "internal": false,
+        "mac": "00:15:5d:21:de:25",
+        "address": "172.18.9.193",
+        "netmask": "255.255.255.240",
+        "family": "IPv4"
+      }
+    ],
+    "host": "DESKTOP-DJ8M25L"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff7be9f19f9",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+10873"
+    },
+    {
+      "pc": "0x00007ff7be9f5e1c",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+28316"
+    },
+    {
+      "pc": "0x00007ff7be9f4dd8",
+      "symbol": "std::basic_ostream<char,std::char_traits<char> >::operator<<+24152"
+    },
+    {
+      "pc": "0x00007ff7beaf364b",
+      "symbol": "v8::base::CPU::has_sse+38363"
+    },
+    {
+      "pc": "0x00007ff7bf30a11e",
+      "symbol": "v8::Isolate::ReportExternalAllocationLimitReached+94"
+    },
+    {
+      "pc": "0x00007ff7bf2f21f1",
+      "symbol": "v8::SharedArrayBuffer::Externalize+833"
+    },
+    {
+      "pc": "0x00007ff7bf1be74c",
+      "symbol": "v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1436"
+    },
+    {
+      "pc": "0x00007ff7bf1c99a0",
+      "symbol": "v8::internal::Heap::ProtectUnprotectedMemoryChunks+1312"
+    },
+    {
+      "pc": "0x00007ff7bf1c64c4",
+      "symbol": "v8::internal::Heap::PageFlagsAreConsistent+3204"
+    },
+    {
+      "pc": "0x00007ff7bf1bbce3",
+      "symbol": "v8::internal::Heap::CollectGarbage+1283"
+    },
+    {
+      "pc": "0x00007ff7bf1ba354",
+      "symbol": "v8::internal::Heap::AddRetainedMap+2452"
+    },
+    {
+      "pc": "0x00007ff7bf1db53d",
+      "symbol": "v8::internal::Factory::NewFillerObject+61"
+    },
+    {
+      "pc": "0x00007ff7bef40e21",
+      "symbol": "v8::internal::interpreter::JumpTableTargetOffsets::iterator::operator=+1665"
+    },
+    {
+      "pc": "0x00007ff7bf754fad",
+      "symbol": "v8::internal::SetupIsolateDelegate::SetupHeap+546637"
+    },
+    {
+      "pc": "0x000002a0d316990a",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2151395328,
+    "totalCommittedMemory": 2151395328,
+    "usedMemory": 2145194344,
+    "availableMemory": 48165056,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 262144,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 2097152,
+        "committedMemory": 2097152,
+        "capacity": 1047456,
+        "used": 435104,
+        "available": 612352
+      },
+      "old_space": {
+        "memorySize": 2085502976,
+        "committedMemory": 2085502976,
+        "capacity": 2082161552,
+        "used": 2082076272,
+        "available": 85280
+      },
+      "code_space": {
+        "memorySize": 430080,
+        "committedMemory": 430080,
+        "capacity": 351200,
+        "used": 351200,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 2101248,
+        "committedMemory": 2101248,
+        "capacity": 1427360,
+        "used": 1427360,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 60952576,
+        "committedMemory": 60952576,
+        "capacity": 60868816,
+        "used": 60868816,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 2784,
+        "used": 2784,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 1047456,
+        "used": 0,
+        "available": 1047456
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 85.515,
+    "kernelCpuSeconds": 2.718,
+    "cpuConsumptionPercent": 180.067,
+    "maxRss": 2269675520,
+    "pageFaults": {
+      "IORequired": 921163,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 2662,
+      "writes": 6
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=D:": "D:\\person_project\\simple-websocket-center",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "ANDROID_HOME": "F:\\android",
+    "APPDATA": "C:\\Users\\Marvin\\AppData\\Roaming",
+    "COLORTERM": "true",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "DESKTOP-DJ8M25L",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "DEBUG_COLORS": "true",
+    "DevEco Studio": "E:\\DevEco Studio\\bin;",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "ELECTRON_NO_ATTACH_CONSOLE": "true",
+    "FORCE_COLOR": "true",
+    "FPS_BROWSER_APP_PROFILE_STRING": "Internet Explorer",
+    "FPS_BROWSER_USER_PROFILE_STRING": "Default",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\Marvin",
+    "IDEA_INITIAL_DIRECTORY": "C:\\Users\\Marvin\\Desktop",
+    "INIT_CWD": "D:\\person_project\\simple-websocket-center",
+    "IntelliJ IDEA": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.2.3\\bin;",
+    "JAVA_HOME": "C:\\Program Files\\Java\\jdk-9.0.4",
+    "LOCALAPPDATA": "C:\\Users\\Marvin\\AppData\\Local",
+    "LOGONSERVER": "\\\\DESKTOP-DJ8M25L",
+    "MOCHA_COLORS": "1",
+    "MYSQL_HOME": "E:\\mysql",
+    "NODE": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"start:dev\"],\"original\":[\"run\",\"start:dev\"]}",
+    "npm_config_bin_links": "true",
+    "npm_config_color": "always",
+    "npm_config_home": "https://npm.taobao.org",
+    "npm_config_ignore_optional": "",
+    "npm_config_ignore_scripts": "",
+    "npm_config_init_license": "MIT",
+    "npm_config_init_version": "1.0.0",
+    "npm_config_PUPPETEER_DOWNLOAD_HOST": "https://npm.taobao.org/mirrors",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "npm_config_save_prefix": "^",
+    "npm_config_strict_ssl": "true",
+    "npm_config_user_agent": "yarn/1.22.4 npm/? node/v12.16.0 win32 x64",
+    "npm_config_version_commit_hooks": "true",
+    "npm_config_version_git_message": "v%s",
+    "npm_config_version_git_sign": "",
+    "npm_config_version_git_tag": "true",
+    "npm_config_version_tag_prefix": "v",
+    "npm_config___registry_npm_taobao_org__always_auth": "",
+    "npm_config___registry_npm_taobao_org__email": "yongfeide123@gmail.com",
+    "npm_config___registry_npm_taobao_org__username": "canyuegongzi",
+    "npm_execpath": "C:\\Users\\Marvin\\AppData\\Roaming\\nvm\\v12.16.0\\node_modules\\yarn\\bin\\yarn.js",
+    "npm_lifecycle_event": "start:dev",
+    "npm_lifecycle_script": "nest start --watch",
+    "npm_node_execpath": "C:\\Program Files\\nodejs\\node.exe",
+    "npm_package_dependencies_amqplib": "^0.6.0",
+    "npm_package_dependencies_amqp_connection_manager": "^3.2.0",
+    "npm_package_dependencies_axios": "^0.19.0",
+    "npm_package_dependencies_cache_manager_redis_store": "^1.5.0",
+    "npm_package_dependencies_class_transformer": "^0.2.0",
+    "npm_package_dependencies_class_validator": "^0.9.1",
+    "npm_package_dependencies_ejs": "^2.6.1",
+    "npm_package_dependencies_eslint": "^5.16.0",
+    "npm_package_dependencies_express_session": "^1.16.1",
+    "npm_package_dependencies_jsonwebtoken": "^8.5.1",
+    "npm_package_dependencies_moment": "^2.24.0",
+    "npm_package_dependencies_mongodb": "3.6.0",
+    "npm_package_dependencies_mongoose": "^5.7.10",
+    "npm_package_dependencies_multer": "^1.4.1",
+    "npm_package_dependencies_mysql": "^2.16.0",
+    "npm_package_dependencies_nestjs_redis": "^1.2.3",
+    "npm_package_dependencies_nest_event": "^1.0.8",
+    "npm_package_dependencies_passport": "^0.4.0",
+    "npm_package_dependencies_passport_http_bearer": "^1.0.1",
+    "npm_package_dependencies_passport_jwt": "^4.0.0",
+    "npm_package_dependencies_redis": "^2.8.0",
+    "npm_package_dependencies_reflect_metadata": "^0.1.12",
+    "npm_package_dependencies_rimraf": "^2.6.2",
+    "npm_package_dependencies_rxjs": "^6.3.3",
+    "npm_package_dependencies_socket_io_client": "^2.3.0",
+    "npm_package_dependencies_socket_io_redis": "^5.3.0",
+    "npm_package_dependencies_typeorm": "^0.2.30",
+    "npm_package_dependencies_uuid": "^8.3.2",
+    "npm_package_dependencies_ws": "^7.3.0",
+    "npm_package_dependencies__golevelup_nestjs_rabbitmq": "^1.15.1",
+    "npm_package_dependencies__nestjs_bull": "^0.1.1",
+    "npm_package_dependencies__nestjs_common": "7.4.2",
+    "npm_package_dependencies__nestjs_core": "7.4.2",
+    "npm_package_dependencies__nestjs_jwt": "^7.0.0",
+    "npm_package_dependencies__nestjs_modules_mailer": "^1.5.1",
+    "npm_package_dependencies__nestjs_mongoose": "^7.0.2",
+    "npm_package_dependencies__nestjs_passport": "^7.0.0",
+    "npm_package_dependencies__nestjs_platform_express": "7.4.2",
+    "npm_package_dependencies__nestjs_platform_socket_io": "^7.1.3",
+    "npm_package_dependencies__nestjs_typeorm": "7.1.0",
+    "npm_package_dependencies__nestjs_websockets": "^7.1.3",
+    "npm_package_dependencies__nest_middlewares_express_session": "^6.0.1",
+    "npm_package_description": "基于websocket和消息队列构建即时聊天系统（个人基于node的微服务的实践项目）。 #### 基本特点 1. 普通IM系统基本功能 2. 群聊（后期迭代） 3. 消息持久化备份 4. AI智能聊天功能 5. PC、移动端统一兼容 6. 支持VUE组件、iframe方式引入 #### 系统划分 ##### **后端服务** 涉及技术栈主要包括kafka(日志收集)、rabbitmq(消息推送)、mongodb|mysql|redis(数据缓存、持久化)，websocket。基本框架采用nest.js系统工程包括如下： 1. simple-user-center-server(用户中心) 2. simple-push-center-server（消息推送服务） 3. simple-chat-center-server（IM服务） 4. simple-file-center-server(文件系统服务) ##### **前端服务** 基本框架采用vue搭建，系统工程包括如下： 1. simple-chart-web #### 效果展示 ##### 整体效果 ![整体效果图](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a2046bf49d4248dda7d908acaa0c8267~tplv-k3u1fbpfcp-zoom-1.image) ##### 聊天效果 ![整体效果图](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/933429aa4710486cbe5712cef9b54094~tplv-k3u1fbpfcp-zoom-1.image) ##### AI闲聊 ![整体效果图](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c4513686e8d54c1690cd2dbe162354e8~tplv-k3u1fbpfcp-zoom-1.image) #### 部署方式 1. 普通node项目方式 2. Docker构建相应的镜像并启动 3. 单机版k8s(k3s)部署(提供对应的deployment.yaml模板) ### 系统设计 #### 服务关系图 ![服务关系图](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/dddd110c928e47558badd272c6aedead~tplv-k3u1fbpfcp-zoom-1.image) 1. 用户通过simple-user-center-serve登录后，simple-chat-senter-server根据设备类型，用户id维护socket连接。 2. simjple-push-center-server主要负责向消息队列中发布消息，并将消息缓存到离线库和实时消息库。 3. simple-chat-senter-server通过订阅消息队列，监听到消息，simple-chat-senter-server通过消息类型(目标用户|群组|系统|操作)，查询当前服务维护socket用户，判断用户是否能在线，用户在线的情况下将元数据发送到用户，并发送指令把该条消息从消息离线库中删除,实时消息库标记。 4. 客户端监听消息，进行逻辑操作。 ### 功能设计 #### 离线存储|实时消息存储 系统中存储主要分为消息离线存储和实时聊天存储以及消息持久化存储。 ##### 概述 离线存储主要负责在用户离线的情况下对消息进行临时缓存，实时消息主要负责会话中的消息内容存储。 消息体中含有发送人、消息id（消息去重）、消息发送时间、消息体内容、聊天类型为图片、文件等非字符串类型时先通过saimple-file-center-server进行转存并将该消息标记为文件，内容标记为文件转存地址。 ![整体效果图](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/825a91b6aa4547628e686a6795a3b7d4~tplv-k3u1fbpfcp-zoom-1.image) ``` ### 实时聊天表 | 离线存储表 @Entity({name: 'friend_message'}) export class FriendMessageEntity { @ObjectIdColumn() id: number;",
+    "npm_package_devDependencies_jest": "^23.6.0",
+    "npm_package_devDependencies_nodemon": "^1.18.9",
+    "npm_package_devDependencies_prettier": "^1.15.3",
+    "npm_package_devDependencies_supertest": "^3.4.1",
+    "npm_package_devDependencies_tsconfig_paths": "^3.7.0",
+    "npm_package_devDependencies_tslint": "5.12.1",
+    "npm_package_devDependencies_ts_jest": "^23.10.5",
+    "npm_package_devDependencies_ts_node": "^7.0.1",
+    "npm_package_devDependencies_typescript": "^3.2.4",
+    "npm_package_devDependencies__nestjs_cli": "^7.0.0",
+    "npm_package_devDependencies__nestjs_microservices": "^7.1.3",
+    "npm_package_devDependencies__nestjs_schematics": "^7.0.0",
+    "npm_package_devDependencies__nestjs_testing": "^6.0.0",
+    "npm_package_devDependencies__types_express": "^4.16.0",
+    "npm_package_devDependencies__types_jest": "^23.3.13",
+    "npm_package_devDependencies__types_mongoose": "^5.5.31",
+    "npm_package_devDependencies__types_node": "^10.12.18",
+    "npm_package_devDependencies__types_socket_io": "2.1.2",
+    "npm_package_devDependencies__types_supertest": "^2.0.7",
+    "npm_package_devDependencies__types_ws": "^7.2.5",
+    "npm_package_jest_coverageDirectory": "../coverage",
+    "npm_package_jest_moduleFileExtensions_0": "js",
+    "npm_package_jest_moduleFileExtensions_1": "json",
+    "npm_package_jest_moduleFileExtensions_2": "ts",
+    "npm_package_jest_rootDir": "src",
+    "npm_package_jest_testEnvironment": "node",
+    "npm_package_jest_testRegex": ".spec.ts$",
+    "npm_package_jest_transform_______t_j_s_": "ts-jest",
+    "npm_package_license": "MIT",
+    "npm_package_name": "simple-user-center",
+    "npm_package_readmeFilename": "README.md",
+    "npm_package_scripts_build": "nest build",
+    "npm_package_scripts_format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "npm_package_scripts_lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "npm_package_scripts_prebuild": "rimraf dist",
+    "npm_package_scripts_start": "nest start",
+    "npm_package_scripts_start_debug": "nest start --debug --watch",
+    "npm_package_scripts_start_dev": "nest start --watch",
+    "npm_package_scripts_start_dev_nodemon": "nodemon",
+    "npm_package_scripts_start_prod": "node dist/main",
+    "npm_package_scripts_test": "jest",
+    "npm_package_scripts_test_cov": "jest --coverage",
+    "npm_package_scripts_test_debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "npm_package_scripts_test_e2e": "jest --config ./test/jest-e2e.json",
+    "npm_package_scripts_test_watch": "jest --watch",
+    "npm_package_version": "0.0.1",
+    "NUMBER_OF_PROCESSORS": "8",
+    "NVM_HOME": "C:\\Users\\Marvin\\AppData\\Roaming\\nvm",
+    "NVM_SYMLINK": "C:\\Program Files\\nodejs",
+    "OneDrive": "C:\\Users\\Marvin\\OneDrive",
+    "OneDriveConsumer": "C:\\Users\\Marvin\\OneDrive",
+    "OS": "Windows_NT",
+    "Path": "C:\\Users\\Marvin\\AppData\\Local\\Temp\\yarn--1611459195793-0.33029582339790875;D:\\person_project\\simple-websocket-center\\node_modules\\.bin;C:\\Users\\Marvin\\AppData\\Local\\Yarn\\Data\\link\\node_modules\\.bin;C:\\Users\\Marvin\\AppData\\Local\\Yarn\\bin;C:\\Program Files\\libexec\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\lib\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\node-gyp-bin;C:\\Program Files (x86)\\NetSarang\\Xftp 6\\;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\Program Files (x86)\\NetSarang\\Xshell 6\\;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Redis\\;E:\\mysql\\bin;C:\\Program Files\\Java\\jdk-9.0.4\\bin;C:\\Users\\Marvin\\AppData\\Roaming\\nvm;C:\\Program Files\\nodejs;C:\\Program Files\\Git\\cmd;F:\\android\\platform-tools;F:\\android\\tools;C:\\Program Files\\kubectl;C:\\Users\\Marvin\\AppData\\Local\\Programs\\Python\\Python38\\Scripts\\;C:\\Users\\Marvin\\AppData\\Local\\Programs\\Python\\Python38\\;C:\\Users\\Marvin\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2019.2.3\\bin;;C:\\Program Files\\JetBrains\\WebStorm 2018.3.5\\bin;;C:\\Users\\Marvin\\AppData\\Roaming\\nvm;C:\\Program Files\\nodejs;C:\\Users\\Marvin\\AppData\\Roaming\\搜狐影音\\6.5.0.0;E:\\DevEco Studio\\bin;;",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JSE;.WSF;.WSH;.MSC",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 126 Stepping 5, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "7e05",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "SESSIONNAME": "Console",
+    "SHPLAYER": "C:\\Users\\Marvin\\AppData\\Roaming\\搜狐影音\\6.5.0.0",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\Marvin\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\Marvin\\AppData\\Local\\Temp",
+    "USERDOMAIN": "DESKTOP-DJ8M25L",
+    "USERDOMAIN_ROAMINGPROFILE": "DESKTOP-DJ8M25L",
+    "USERNAME": "Marvin",
+    "USERPROFILE": "C:\\Users\\Marvin",
+    "WebStorm": "C:\\Program Files\\JetBrains\\WebStorm 2018.3.5\\bin;",
+    "windir": "C:\\WINDOWS",
+    "YARN_WRAP_OUTPUT": "false"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\winmmbase.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\System32\\UMPDC.dll",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll"
+  ]
+}

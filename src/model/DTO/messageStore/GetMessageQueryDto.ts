@@ -8,4 +8,6 @@ export class GetMessageQueryDto {
     time: any;
 
     friendList: string[];
+
+    groupList: string[];
 }

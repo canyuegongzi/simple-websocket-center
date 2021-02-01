@@ -1,9 +1,13 @@
 export class AffirmChatMessageDto {
-    messageType: ['FRIEND' | 'GROUP' | 'SYSTEM', 'OTHER'];
+    messageType: string; // ['FRIEND' | 'GROUP' | 'SYSTEM', 'OTHER'];
 
     messageId: string;
 
     hashId: string;
 
     status: string;
+
+    userId: string;
+
+    groupId: string;
 }

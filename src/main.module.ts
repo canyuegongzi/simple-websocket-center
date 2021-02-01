@@ -3,25 +3,27 @@ import { RedisModule} from 'nestjs-redis';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { MessageModule } from './module/message.module';
-import { MessageGroupEntity} from './model/mongoEntity/messageGroup.entity';
-import { LineEntity} from './model/mongoEntity/line.entity';
-import {MessageEntity} from './model/mongoEntity/message.entity';
-import {MessageUserEntity} from './model/mongoEntity/messageUser.entity';
-import {RequestMessageEntity} from './model/mongoEntity/requestMessage.entity';
-import {TypeEntity} from './model/mongoEntity/type.entity';
-import {AmqpMessageModule} from './module/amqpMessage.module';
+import { MessageModule } from './module/MessageModule';
+import {RequestMessageEntity} from './model/mongoEntity/RequestMessageEntity';
+import {AmqpMessageModule} from './module/AmqpMessageModule';
 import {redisConfig} from './config/config';
-import {EventModule} from './module/event.module';
-import {UserMap} from './model/mongoEntity/friend.entity';
-import {FriendModule} from './module/friend.module';
-import {ImAddRequestEntity} from './model/mongoEntity/imAddRequest.entity';
-import { FriendMessageEntity } from './model/noticePersistence/friendMessage.entity';
-import {GroupMessageEntity} from './model/noticePersistence/groupMessage.entity';
-import {FriendMessageOffLineEntity} from './model/noticePersistence/friendMessageOffLine.entity';
-import {MessageStoreModule} from './module/messageStore.module';
-import {SystemRobotModule} from './module/SystemRobot.module';
-import {RobotMessageEntity} from './model/mongoEntity/robotMessage.entity';
+import {EventModule} from './module/EventModule';
+import {UserMap} from './model/mongoEntity/FriendEntity';
+import {FriendModule} from './module/FriendModule';
+import {ImAddRequestEntity} from './model/mongoEntity/ImAddRequestEntity';
+import { FriendMessageEntity } from './model/noticePersistence/FriendMessageEntity';
+import {GroupMessageEntity} from './model/noticePersistence/GroupMessageEntity';
+import {FriendMessageOffLineEntity} from './model/noticePersistence/FriendMessageOffLineEntity';
+import {MessageStoreModule} from './module/MessageStoreModule';
+import {SystemRobotModule} from './module/SystemRobotModule';
+import {RobotMessageEntity} from './model/mongoEntity/RobotMessageEntity';
+import {GroupEntity} from './model/mongoEntity/GroupEntity';
+import {GroupUserMapEntity} from './model/mongoEntity/GroupUserMapEntity';
+import {GroupUserRoleEntity} from './model/mongoEntity/GroupUserRoleEntity';
+import {ImRequestGroupEntity} from './model/mongoEntity/ImRequestGroupEntity';
+import {GroupModule} from './module/GroupModule';
+import {GroupReceiveMessageEntity} from './model/noticePersistence/GroupReceiveMessageEntity';
+import {GroupSendMessageEntity} from './model/noticePersistence/GroupSendMessageEntity';
 @Module({
   imports: [
     RedisModule.register(redisConfig),
@@ -38,7 +40,7 @@ import {RobotMessageEntity} from './model/mongoEntity/robotMessage.entity';
             authSource: 'admin',
             username: 'root',
             password: '123ADD123ADD',
-            entities: [LineEntity, MessageEntity, MessageGroupEntity, MessageUserEntity, RequestMessageEntity, TypeEntity, UserMap, ImAddRequestEntity, RobotMessageEntity ],
+            entities: [RequestMessageEntity, UserMap, ImAddRequestEntity, RobotMessageEntity, GroupEntity, GroupUserMapEntity, GroupUserRoleEntity, ImRequestGroupEntity ],
         },
     ),
       TypeOrmModule.forRoot(
@@ -54,10 +56,10 @@ import {RobotMessageEntity} from './model/mongoEntity/robotMessage.entity';
               authSource: 'admin',
               username: 'root',
               password: '123ADD123ADD',
-              entities: [FriendMessageEntity, GroupMessageEntity, FriendMessageOffLineEntity],
+              entities: [FriendMessageEntity, GroupMessageEntity, FriendMessageOffLineEntity, GroupReceiveMessageEntity, GroupSendMessageEntity],
           },
       ),
-    MessageModule, EventModule, FriendModule, SystemRobotModule,
+    MessageModule, EventModule, FriendModule, GroupModule, SystemRobotModule,
     AmqpMessageModule, MessageStoreModule,
   ],
   controllers: [ AppController ],

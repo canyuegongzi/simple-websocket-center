@@ -6,14 +6,15 @@ const config = {
 };
 export const redisConfig = {
     name: 'user_websocket',
+    // url: 'redis://47.106.104.22:6379/4',
     url: 'redis://127.0.0.1',
 };
 
 export const mongoDbConfig = {
     name: 'simple-chart-center',
     url: '',
+    // url: 'mongodb://127.0.0.1/simple_message_center',
 };
-
 
 export const httpUrl = {
   userApi: '',

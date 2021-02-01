@@ -248,7 +248,7 @@ export class ImAddRequestEntity {
 }
 ```
 ##### 核心代码
-代码见simple-chat-center-server/serveice/friend.service.ts
+代码见simple-chat-center-server/serveice/FriendService.ts
 ```
 /**
  * 请求添加
