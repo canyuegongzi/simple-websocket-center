@@ -18,7 +18,7 @@ export class GroupSendMessageEntity {
     messageType: string;
 
     @Column({comment: '群组id'})
-    groupId: string;
+    groupCode: string;
 
     @Column({comment: '用户id'})
     userId: string;

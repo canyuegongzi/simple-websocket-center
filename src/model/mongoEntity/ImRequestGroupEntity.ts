@@ -17,8 +17,8 @@ export class ImRequestGroupEntity {
     @Column({comment: '目标个人name'})
     targetName: string;
 
-    @Column({comment: '群组id'})
-    groupId: string;
+    @Column({comment: '群组code'})
+    groupCode: string;
 
     @Column({comment: '群组name'})
     groupName: string;

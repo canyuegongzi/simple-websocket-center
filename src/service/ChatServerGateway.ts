@@ -94,7 +94,7 @@ export class ChatServerGateway extends EventEmitter implements OnGatewayConnecti
                         this.server.to(redisUserInfo[j].client).emit('groupMessage',  {
                             content: params.content,
                             createTime: params.createTime,
-                            groupId: params.groupId,
+                            groupCode: params.groupCode,
                             hashId: params.hashId,
                             type: params.type,
                             userId: params.userId,

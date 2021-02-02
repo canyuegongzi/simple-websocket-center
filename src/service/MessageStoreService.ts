@@ -89,18 +89,18 @@ export class MessageStoreService {
      * @param messageQueryDto
      */
     public async getUserGroupHomeMessageList(messageQueryDto: GetMessageQueryDto) {
-        let userGroupIds: string[] = messageQueryDto.groupList;
+        let userGroupCodes: string[] = messageQueryDto.groupList;
         const pageSize = Number(messageQueryDto.pageSize);
         const page = Number(messageQueryDto.page);
         try {
-            if (!userGroupIds || !userGroupIds.length) {
+            if (!userGroupCodes || !userGroupCodes.length) {
                 try {
                     const res = await this.groupUserMapEntityRepository.findAndCount({userId: messageQueryDto.userId.toString()});
-                    userGroupIds = res[0].map((item) => {
-                        return item.groupId;
+                    userGroupCodes = res[0].map((item) => {
+                        return item.groupCode;
                     });
                 } catch (e) {
-                    userGroupIds = [];
+                    userGroupCodes = [];
                 }
 
             }
@@ -113,13 +113,13 @@ export class MessageStoreService {
                         createTime: {
                             $gt: timeNumber,
                         },
-                        groupId: {
-                            $in: userGroupIds,
+                        groupCode: {
+                            $in: userGroupCodes,
                         },
                         userId: messageQueryDto.userId,
                     },
                 });
-            return this.getGroupMessageGroupList(messageRes[0], userGroupIds, messageQueryDto.userId);
+            return this.getGroupMessageGroupList(messageRes[0], userGroupCodes, messageQueryDto.userId);
         } catch (e) {
             console.log(e);
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
@@ -163,15 +163,15 @@ export class MessageStoreService {
             const messageTotalMap: any = {};
             const messageUnreadHashIdsMap: any = {};
             for (let i = 0; i < messageList.length; i ++) {
-                if (!messageMap[messageList[i].groupId]) { messageMap[messageList[i].groupId] = []; }
-                if (!messageTotalMap[messageList[i].groupId]) { messageTotalMap[messageList[i].groupId] = 0; }
-                messageMap[messageList[i].groupId].push(messageList[i]);
+                if (!messageMap[messageList[i].groupCode]) { messageMap[messageList[i].groupCode] = []; }
+                if (!messageTotalMap[messageList[i].groupCode]) { messageTotalMap[messageList[i].groupCode] = 0; }
+                messageMap[messageList[i].groupCode].push(messageList[i]);
                 if (messageList[i].status + '' === '0') {
-                    messageTotalMap[messageList[i].groupId] = messageTotalMap[messageList[i].groupId] + 1;
-                    if (!messageUnreadHashIdsMap[messageList[i].groupId])  {
-                        messageUnreadHashIdsMap[messageList[i].groupId] = [];
+                    messageTotalMap[messageList[i].groupCode] = messageTotalMap[messageList[i].groupCode] + 1;
+                    if (!messageUnreadHashIdsMap[messageList[i].groupCode])  {
+                        messageUnreadHashIdsMap[messageList[i].groupCode] = [];
                     }
-                    messageUnreadHashIdsMap[messageList[i].groupId].push(messageList[i].hashId);
+                    messageUnreadHashIdsMap[messageList[i].groupCode].push(messageList[i].hashId);
                 }
             }
             const resultMap: any = {};
@@ -232,7 +232,7 @@ export class MessageStoreService {
                     take: pageSize,
                     order: { createTime: 'DESC'},
                     where: {
-                        groupId: messageQueryDto.groupId,
+                        groupCode: messageQueryDto.groupCode,
                     },
                     select: ['content', 'createTime', 'hashId', 'messageType', 'userId', 'hashId', 'id'],
                 });
@@ -291,7 +291,7 @@ export class MessageStoreService {
      */
     public async updateGroupMessageStatus(message: AffirmChatMessageDto) {
         const hashIds: string[] = message.hashId.split(',');
-        console.log(message.groupId);
+        console.log(message.groupCode);
         console.log(message.userId);
         return await Promise.all([
             this.groupReceiveMessageEntityRepository.updateMany(
@@ -300,7 +300,7 @@ export class MessageStoreService {
                         $in: hashIds,
                     },
                     userId: message.userId,
-                    groupId: message.groupId,
+                    groupCode: message.groupCode,
                 },
                 {
                     $set: {

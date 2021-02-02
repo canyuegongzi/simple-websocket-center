@@ -5,8 +5,8 @@ export class GroupUserMapEntity {
     @ObjectIdColumn({ name: 'id' })
     id: ObjectID;
 
-    @Column({comment: '群id'})
-    groupId: string;
+    @Column({comment: '群code'})
+    groupCode: string;
 
     @Column({comment: '群员id'})
     userId: string;

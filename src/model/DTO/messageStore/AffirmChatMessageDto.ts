@@ -9,5 +9,5 @@ export class AffirmChatMessageDto {
 
     userId: string;
 
-    groupId: string;
+    groupCode: string;
 }

@@ -2,8 +2,6 @@ import { Module} from '@nestjs/common';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import {rabbitMQConfig} from '../config/config';
 import {AmqpMessageConsumerService} from '../service/AmqpMessageConsumerService';
-import {AmqpMessageProductService} from '../service/AmqpMessageProductService';
-import {AmqpMessageController} from '../controller/AmqpMessageController';
 
 @Module({
     imports: [
@@ -29,8 +27,8 @@ import {AmqpMessageController} from '../controller/AmqpMessageController';
             uri: rabbitMQConfig.url,
         }),
     ],
-    controllers: [AmqpMessageController],
-    providers: [ AmqpMessageProductService, AmqpMessageConsumerService],
+    controllers: [],
+    providers: [ AmqpMessageConsumerService],
     exports: [],
 })
 export class AmqpMessageModule {}

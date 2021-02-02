@@ -6,7 +6,7 @@ export class GroupMessageQueryDto {
     userId?: any;
 
     @IsNotEmpty({ message: '群组不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
-    groupId: any;
+    groupCode: any;
 
     @IsNotEmpty({ message: 'page不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
     page: number;

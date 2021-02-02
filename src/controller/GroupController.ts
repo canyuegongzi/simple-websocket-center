@@ -23,7 +23,6 @@ export class GroupController {
             const res: any = await this.groupService.getList(userId);
             return new ResultData(MessageType.OPERATE,  res, true);
         } catch (e) {
-            console.log(e);
             return new ResultData(MessageType.OPERATE,  true, true);
         }
 
@@ -75,12 +74,12 @@ export class GroupController {
 
     /**
      * 删除群组
-     * @param params
+     * @param groupCode
      */
     @Post('/delete')
-    public async deleteGroup(@Body('id') groupId: string) {
+    public async deleteGroup(@Body('id') groupCode: string) {
         try {
-            await this.groupService.deleteGroup(groupId);
+            await this.groupService.deleteGroup(groupCode);
             return new ResultData(MessageType.DELETE,  true, true);
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
@@ -89,12 +88,12 @@ export class GroupController {
 
     /**
      * 获取群组信息
-     * @param params
+     * @param groupCode
      */
     @Get('/info')
-    public async getGroupInfo(@Query('id') groupId: string) {
+    public async getGroupInfo(@Query('groupCode') groupCode: string) {
         try {
-            const info: any[] = await this.groupService.getGroupInfo(groupId);
+            const info: any[] = await this.groupService.getGroupInfo(groupCode);
             return new ResultData(MessageType.GETINFO,  info.length ? info[0] : null, true);
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
@@ -111,7 +110,6 @@ export class GroupController {
             await this.groupService.requestAddFriendToGroup(params);
             return new ResultData(MessageType.OPERATE,  true, true);
         } catch (e) {
-            console.log(e);
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
         }
     }
@@ -140,7 +138,6 @@ export class GroupController {
             const res: any = await this.groupService.getList(userId);
             return new ResultData(MessageType.OPERATE,  {data: res[0], total: res[1]}, true);
         } catch (e) {
-            console.log(e);
             return new ResultData(MessageType.OPERATE,  true, true);
         }
 

@@ -41,20 +41,16 @@ export class GroupService {
     public async getList(userId: string) {
         try {
             const res: [GroupUserMapEntity[], number] = await this.groupUserMapEntityRepository.findAndCount({userId});
-            const ids = res[0].map((item: GroupUserMapEntity) => {
-                return new ObjectID(item.groupId);
+            const codes = res[0].map((item: GroupUserMapEntity) => {
+                return item.groupCode;
             });
-            const groupList = await this.groupEntityRepository.findAndCount({
+            return await this.groupEntityRepository.find({
                 where: {
-                    _id: {
-                        $in: ids,
+                    groupCode: {
+                        $in: codes,
                     },
                 },
             });
-            const resultList: GroupEntity[] = ids.map((item: any, index: number) => {
-                return { id: item, ...groupList[0][index] };
-            });
-            return resultList;
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
         }
@@ -78,7 +74,7 @@ export class GroupService {
             const res: any = await this.groupEntityRepository.insertOne(documentDoc);
             // @ts-ignore
             const groupUserDocumentDoc: GroupUserMapEntity = {
-                groupId: res.ops[0]._id + '',
+                groupCode: documentDoc.groupCode,
                 userId: params.rootId,
                 userName: params.rootName,
                 userIcon: params.rootIcon || null,
@@ -89,7 +85,6 @@ export class GroupService {
                 deleteTime: null,
             };
             return await this.groupUserMapEntityRepository.insertOne(groupUserDocumentDoc);
-            return res;
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
         }
@@ -117,12 +112,12 @@ export class GroupService {
 
     /**
      * 删除群组
-     * @param groupId
+     * @param groupCode
      */
-    public async deleteGroup(groupId: string) {
+    public async deleteGroup(groupCode: string) {
         try {
-            await this.groupEntityRepository.deleteOne({ _id: new ObjectID(groupId)});
-            return  await this.groupUserMapEntityRepository.deleteMany({groupId});
+            await this.groupEntityRepository.deleteOne({ groupCode});
+            return  await this.groupUserMapEntityRepository.deleteMany({groupCode});
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
         }
@@ -130,18 +125,18 @@ export class GroupService {
 
     /**
      * 查询群组信息
-     * @param groupId
+     * @param groupCode
      */
-    public async getGroupInfo(groupId: string) {
+    public async getGroupInfo(groupCode: string) {
         try {
             const userList: GroupUserMapEntity[] = await this.groupUserMapEntityRepository.find({
-                groupId,
+                groupCode,
             });
-            const groupList: GroupEntity[] = await this.groupEntityRepository.findByIds([new ObjectID(groupId)]);
+            const groupList: GroupEntity[] = await this.groupEntityRepository.find({groupCode});
             return  groupList.map((item: GroupEntity) => {
                 return {
                     ...item,
-                    id: groupId,
+                    groupCode,
                     userList: userList.map((user: GroupUserMapEntity) => {
                         return {
                             userId: user.userId,
@@ -165,14 +160,14 @@ export class GroupService {
         try {
             const uuidStr: string = uuid.v1();
             const requestAddUserToGroupDtoList: RequestAddUserToGroupDto[] = [];
-            const groupId: string = params.groupId;
-            if (!groupId) {
+            const groupCode: string = params.groupCode;
+            if (!groupCode) {
                 const groupInfo: GroupEntity = await this.groupEntityRepository.findOne({ groupCode: params.groupCode});
                 console.log(groupInfo);
             }
             return;
             // 查询出群组的管理人员（群主 | 管理员）
-            const list: any = await this.queryUserListOfGroup([GROUP_ROLE_MAP.ROOT, GROUP_ROLE_MAP.ADMIN], params.groupId || params.groupCode);
+            const list: any = await this.queryUserListOfGroup([GROUP_ROLE_MAP.ROOT, GROUP_ROLE_MAP.ADMIN], params.groupCode || params.groupCode);
             const userList: GroupUserMapEntity[] = list;
             const userIds = userList.map((item: GroupUserMapEntity) => item.userId);
             for (let i = 0; i < userList.length; i ++) {
@@ -181,7 +176,7 @@ export class GroupService {
             }
             if (requestAddUserToGroupDtoList.length) {
                 // 把入群请求扔到消息队列里面
-                const publishData = {groupId: params.groupId, groupName: params.groupName, targetId: userIds.join(','), formId: params.userId, type: 'GROUP', note: params.note};
+                const publishData = {groupCode: params.groupCode, groupName: params.groupName, targetId: userIds.join(','), formId: params.userId, type: 'GROUP', note: params.note};
                 await this.messageClient.publish(rabbitMQConfig.websocketRequestExchange, 'new-request', JSON.stringify(publishData));
                 // 把请求数据持久化掉
                 return await this.imRequestGroupEntityRepository.insertMany(requestAddUserToGroupDtoList);
@@ -217,7 +212,7 @@ export class GroupService {
                 // 将用户加入群人员
                 const friendList: GroupUserMapEntity[] = [
                     // @ts-ignore
-                    {groupId: itemInfo.groupId, userId: itemInfo.userId, userName: itemInfo.userName, userIcon: itemInfo.userIcon || null, userRoleId: GROUP_ROLE_MAP.NORMAL, userRoleName: GROUP_ROLE_MAP.NORMAL, updateTime: null, createTime: new Date().getTime(), deleteTime: null}
+                    {groupCode: itemInfo.groupCode, userId: itemInfo.userId, userName: itemInfo.userName, userIcon: itemInfo.userIcon || null, userRoleId: GROUP_ROLE_MAP.NORMAL, userRoleName: GROUP_ROLE_MAP.NORMAL, updateTime: null, createTime: new Date().getTime(), deleteTime: null}
                     ];
                 await this.groupUserMapEntityRepository.insertMany(friendList);
             }
@@ -229,10 +224,10 @@ export class GroupService {
     /**
      * 查询群组的人员
      * @param role
-     * @param groupId
+     * @param groupCode
      * @return [GroupUserMapEntity[], number]
      */
-    public async queryUserListOfGroup(role: string[] = [], groupId: string) {
+    public async queryUserListOfGroup(role: string[] = [], groupCode: string) {
         let roleList: string[] = role;
         if (!roleList.length) {
             roleList = [GROUP_ROLE_MAP.ROOT, GROUP_ROLE_MAP.ADMIN, GROUP_ROLE_MAP.NORMAL];
@@ -245,7 +240,7 @@ export class GroupService {
                         userRoleId: {
                             $in: roleList,
                         },
-                        groupId,
+                        groupCode,
                     },
                 });
             return userList;

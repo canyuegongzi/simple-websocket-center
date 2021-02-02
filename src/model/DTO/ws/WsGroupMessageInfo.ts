@@ -12,7 +12,7 @@ export class WsGroupMessageInfo {
     content?: string;
 
     @IsNotEmpty({ message: '消息对象群不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
-    groupId?: string;
+    groupCode?: string;
 
     @IsNotEmpty({ message: '消息发出者不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
     userId?: string;

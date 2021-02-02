@@ -9,7 +9,7 @@ export class GroupMessageEntity {
   userId: string;
 
   @Column()
-  groupId: string;
+  groupCode: string;
 
   @Column()
   content: string;

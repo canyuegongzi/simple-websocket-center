@@ -31,11 +31,8 @@ export class AmqpMessageConsumerService extends EventEmitter {
     })
     public taskSubscriberFriend(@Payload() message: any, @Ctx() context: RmqContext ) {
         const data: WsFriendMessageInfo = JSON.parse(message);
-        console.log(data);
         this.numIndex ++;
-        console.log(`rabbit接收到了广播的第${this.numIndex}消息队列`);
         this.nestEventEmitter.emitter('emit-websocket-message').emit('friend-message', data);
-        console.log('消息已经处理了');
         return {
             response: 42,
         };
@@ -68,7 +65,6 @@ export class AmqpMessageConsumerService extends EventEmitter {
         queue: rabbitMQConfig.websocketGroupMessageQueue,
     })
     public taskSubscriberGroup(@Payload() message: any, @Ctx() context: RmqContext ) {
-        console.log('rabbit接收到了一个群信息新的任务，开始干活了');
         const data: any = JSON.parse(message);
         this.nestEventEmitter.emitter('emit-websocket-message').emit('group-message', data);
     }
