@@ -12,17 +12,17 @@ export const redisConfig = {
 
 export const mongoDbConfig = {
     name: 'simple-chart-center',
-    url: '',
+    url: 'mongodb://47.106.104.22/simple_message_center',
     // url: 'mongodb://127.0.0.1/simple_message_center',
 };
 
 export const httpUrl = {
-  userApi: '',
-  pushApi: ''  ,
+  userApi: 'http://148.70.150.131:9002/simple-user-center/v1.0',
+  pushApi: 'http://127.0.0.1:10002/simple-im-push-center/v1.0'  ,
   // userApi: 'http://127.0.0.1:8881',
 };
 export const rabbitMQConfig = {
-        url: '',
+        url: 'amqp://root:123ADD123ADD@148.70.150.131:5179',
         name: 'MESSAGE_SERVICE',
         queue: 'message_queue',
         websocketFriendMessageQueue: 'websocket-friend-message-queue',
@@ -38,9 +38,9 @@ export const rabbitMQConfig = {
 };
 
 export const robotConfig = {
-    appKey: '',
-    SecretKey: '',
-    userId: '',
-    botId: ''
+    appKey: 'Qy9dGdWDVIe8mbb1tXdhTXGr',
+    SecretKey: 'cO2XfvlU31gEgcqy5I0iQuXoGDdCDLE2',
+    userId: 'f3181438fd2e4a5a92fe64ae02dae772',
+    botId: '1073158'
 };
 export default config;
