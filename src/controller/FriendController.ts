@@ -86,7 +86,7 @@ export class FriendController {
     @Post('/friendRequest')
     public async getFriendRequest(@Body('userId') targetId: string) {
         try {
-            const res: any = await this.friendService.getFriendRequest(targetId);
+            const res: any = await this.friendService.getFriendRequest(targetId.toString());
             return new ResultData(MessageType.GETLIST,  {data: res[0], total: res[1]}, true);
         } catch (e) {
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);

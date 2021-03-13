@@ -40,8 +40,8 @@ export class GroupService {
      */
     public async getList(userId: string) {
         try {
-            const res: [GroupUserMapEntity[], number] = await this.groupUserMapEntityRepository.findAndCount({userId});
-            const codes = res[0].map((item: GroupUserMapEntity) => {
+            const res: GroupUserMapEntity[] = await this.groupUserMapEntityRepository.find({userId});
+            const codes = res.map((item: GroupUserMapEntity) => {
                 return item.groupCode;
             });
             return await this.groupEntityRepository.find({
@@ -165,7 +165,6 @@ export class GroupService {
                 const groupInfo: GroupEntity = await this.groupEntityRepository.findOne({ groupCode: params.groupCode});
                 console.log(groupInfo);
             }
-            return;
             // 查询出群组的管理人员（群主 | 管理员）
             const list: any = await this.queryUserListOfGroup([GROUP_ROLE_MAP.ROOT, GROUP_ROLE_MAP.ADMIN], params.groupCode || params.groupCode);
             const userList: GroupUserMapEntity[] = list;

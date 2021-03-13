@@ -95,8 +95,8 @@ export class MessageStoreService {
         try {
             if (!userGroupCodes || !userGroupCodes.length) {
                 try {
-                    const res = await this.groupUserMapEntityRepository.findAndCount({userId: messageQueryDto.userId.toString()});
-                    userGroupCodes = res[0].map((item) => {
+                    const res: GroupUserMapEntity[] = await this.groupUserMapEntityRepository.find({userId: messageQueryDto.userId.toString()});
+                    userGroupCodes = res.map((item) => {
                         return item.groupCode;
                     });
                 } catch (e) {
@@ -105,7 +105,7 @@ export class MessageStoreService {
 
             }
             const timeNumber: number = Number(messageQueryDto.time);
-            const messageRes: [GroupReceiveMessageEntity[], number] = await this.groupReceiveMessageEntityRepository.findAndCount(
+            const messageRes: GroupReceiveMessageEntity[] = await this.groupSendMessageEntityRepository.find(
                 {skip: (page - 1) * pageSize,
                     take: pageSize,
                     order: { createTime: 'DESC'},
@@ -119,7 +119,7 @@ export class MessageStoreService {
                         userId: messageQueryDto.userId,
                     },
                 });
-            return this.getGroupMessageGroupList(messageRes[0], userGroupCodes, messageQueryDto.userId);
+            return this.getGroupMessageGroupList(messageRes, userGroupCodes);
         } catch (e) {
             console.log(e);
             throw new ApiException(e.message, ApiErrorCode.USER_LIST_FILED, 200);
@@ -155,9 +155,9 @@ export class MessageStoreService {
     /**
      * 对首页群组信息分类计算
      * @param messageList
-     * @param friendList
+     * @param groupList
      */
-    public async getGroupMessageGroupList(messageList: GroupReceiveMessageEntity[], groupList: any[], userId: string) {
+    public async getGroupMessageGroupList(messageList: GroupReceiveMessageEntity[], groupList: any[]) {
         try {
             const messageMap: any = {};
             const messageTotalMap: any = {};
@@ -227,7 +227,7 @@ export class MessageStoreService {
         const pageSize = Number(messageQueryDto.pageSize);
         const page = Number(messageQueryDto.page);
         try {
-            const messageRes: [GroupReceiveMessageEntity[], number] = await this.groupReceiveMessageEntityRepository.findAndCount(
+            const messageRes: [GroupReceiveMessageEntity[], number] = await this.groupSendMessageEntityRepository.findAndCount(
                 {skip: (page - 1) * pageSize,
                     take: pageSize,
                     order: { createTime: 'DESC'},

@@ -21,6 +21,12 @@ export class ImAddRequestEntity {
   formId: string;
 
   @Column()
+  formName: string;
+
+  @Column()
+  formIcon: string;
+
+  @Column()
   type: string;
 
   @Column()

@@ -42,6 +42,8 @@ export class FriendService {
                 targetName: params.targetName,
                 targetIcon: params.targetIcon,
                 formId: params.formId.toString(),
+                formName: params.formName,
+                formIcon: params.formIcon,
                 type: params.type,
                 note: params.note,
                 state: false,
@@ -139,7 +141,6 @@ export class FriendService {
         const pageSize = 100;
         const targetIdStr = targetId.toString();
         try {
-            const list = await this.imAddRequestEntityRepository.findAndCount();
             const requestRes: [ImAddRequestEntity[], number] = await this.imAddRequestEntityRepository.findAndCount(
                 {skip: (page - 1) * pageSize,
                     take: pageSize,

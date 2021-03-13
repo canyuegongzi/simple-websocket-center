@@ -1,5 +1,6 @@
 import {IsNotEmpty} from 'class-validator';
 import { ApiErrorCode } from '../../../config/ApiErrorCodeEnum';
+import {Column} from 'typeorm';
 
 export class RequestAddFriendDto {
     id?: number;
@@ -15,6 +16,12 @@ export class RequestAddFriendDto {
 
     @IsNotEmpty({ message: '请求来源id不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
     formId: string;
+
+    @IsNotEmpty({ message: '请求来源name不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
+    formName: string;
+
+    @IsNotEmpty({ message: '请求来源头像不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
+    formIcon: string;
 
     @IsNotEmpty({ message: '请求类型不能为空', context: { errorCode: ApiErrorCode.PARAMS_DELETIONl } })
     type: string;
